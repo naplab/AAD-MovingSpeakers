@@ -135,7 +135,7 @@ def create_train_dataset(save_path):
             index_pair = train_pair_closer[index-12000]
         
         # load pair of moving speakers
-        spk1_spatial, e_sr = librosa.load(os.path.join(train_spk1_path, f"train_b2_{index_pair[0]}.wav"), sr=16000, mono=False)       
+        spk1_spatial, e_sr = librosa.load(os.path.join(train_spk1_path, f"train_b1_{index_pair[0]}.wav"), sr=16000, mono=False)       
         spk2_spatial, e_sr = librosa.load(os.path.join(train_spk2_path, f"train_b2_{index_pair[1]}.wav"), sr=16000, mono=False) 
         # normalize the speech power
         spk1_spatial = spk1_spatial / np.sqrt(np.sum(spk1_spatial[0]**2+spk1_spatial[1]**2)+1e-8) * 1e2
@@ -183,7 +183,7 @@ def create_val_and_eval_dataset(save_path, spk_pairs):
         
         index_pair = spk_pairs[index]
         # load pair of moving speakers
-        spk1_spatial, e_sr = librosa.load(os.path.join(eval_spk1_path, f"eval_b2_{index_pair[0]}.wav"), sr=16000, mono=False)       
+        spk1_spatial, e_sr = librosa.load(os.path.join(eval_spk1_path, f"eval_b1_{index_pair[0]}.wav"), sr=16000, mono=False)       
         spk2_spatial, e_sr = librosa.load(os.path.join(eval_spk2_path, f"eval_b2_{index_pair[1]}.wav"), sr=16000, mono=False) 
         # normalize the speech power
         spk1_spatial = spk1_spatial / np.sqrt(np.sum(spk1_spatial[0]**2+spk1_spatial[1]**2)+1e-8) * 1e2
