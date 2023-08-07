@@ -64,19 +64,19 @@ class TrajectoryDataset(Dataset):
 
         self.h5pyLoader = h5py.File(path, 'r')
         
-        self.est_s1 = self.h5pyLoader['est_spk1']
-        self.est_s2 = self.h5pyLoader['est_spk2']
-        self.trace = self.h5pyLoader['trace']
+        self.enh_s1 = self.h5pyLoader['enh_spk1']
+        self.enh_s2 = self.h5pyLoader['enh_spk2']
+        self.traj = self.h5pyLoader['traj']
         
-        self._len = self.est_s1.shape[0]
+        self._len = self.enh_s1.shape[0]
     
     def __getitem__(self, index):
 
-        est_s1_tensor = torch.from_numpy(self.est_s1[index].astype(np.float32))
-        est_s2_tensor = torch.from_numpy(self.est_s2[index].astype(np.float32))
-        trace_tensor = torch.from_numpy(self.trace[index].astype(np.float32))
+        enh_s1_tensor = torch.from_numpy(self.enh_s1[index].astype(np.float32))
+        enh_s2_tensor = torch.from_numpy(self.enh_s2[index].astype(np.float32))
+        traj_tensor = torch.from_numpy(self.traj[index].astype(np.float32))
         
-        return est_s1_tensor, est_s2_tensor, trace_tensor
+        return enh_s1_tensor, enh_s2_tensor, traj_tensor
     
     def __len__(self):
         return self._len
