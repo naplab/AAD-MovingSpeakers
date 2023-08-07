@@ -244,9 +244,83 @@ class EnhancementNet(nn.Module):
         masked_feature_right = masks[:,:,1,0,:] * mix_enc_map_right + masks[:,:,1,1,:] * mix_enc_map_left
         masked_features = torch.cat([masked_feature_left, masked_feature_right], dim=0)  # 2*B, H, T
         
-        # waveform decodersws
+        # waveform decoder
         output = self.decoder(masked_features)  # 2*B, 1, L
         output = output[:,:,self.enc_stride:-(rest+self.enc_stride)].contiguous()  # 2*B, 1, L
         output = torch.cat([output[batch_size*i:batch_size*(i+1), :, :] for i in range(2)], 1)  # B, 2, L
         
         return output
+
+
+lass TrajectoryNet(nn.Module):
+    """Trajectory network"""
+    def __init__(
+        self, 
+        feature_dim = 64,
+        hidden_dim = 256, 
+        num_block = 5,
+        num_layer = 7,
+        kernel_size = 3,
+        stft_win = 512,
+        stft_hop = 32,
+        num_cls = 181,
+    ):
+        super(TrajectoryNet, self).__init__()
+    
+        # hyper parameters
+        self.feature_dim = feature_dim
+        self.hidden_dim = self.feature_dim*4
+
+        self.num_layer = num_layer
+        self.num_block = num_block
+        self.kernel_size = kernel_size
+
+        self.stft_win = stft_win
+        self.stft_hop = stft_hop
+        self.stft_dim = stft_win//2 + 1
+        
+        self.num_cls = num_cls
+
+        # Bottom neck layer
+        self.BN = nn.Conv1d(self.stft_dim*4, self.feature_dim, 1, bias=False)
+
+        # TCN encoder
+        self.TCN = TCN(self.feature_dim, self.feature_dim, self.num_layer, 
+                       self.num_block, self.hidden_dim, self.kernel_size, causal=True)
+        
+        self.loc = nn.Sequential(nn.AvgPool1d(10, stride=10, padding=5),
+                                 nn.PReLU(),
+                                 nn.Conv1d(self.feature_dim, self.feature_dim, 1),
+                                 nn.PReLU(),
+                                 nn.Conv1d(self.feature_dim, self.num_cls, 1)
+                                )
+
+        self.eps = 1e-12
+
+
+    def forward(self, input):
+        """
+        Args: 
+            input: mixed waveform (B, 2, L)
+
+        Returns:
+            localization logits (B, L, num_cls)
+
+        """
+        batch_size, n_ch, n_sample = input.shape # B, 2, L
+        
+        stft_left = torch.stft(input[:,0,:], self.stft_win, hop_length=self.stft_hop, window=torch.hann_window(self.stft_win).to(input.device), center=False, return_complex=True)
+        stft_right = torch.stft(input[:,1,:], self.stft_win, hop_length=self.stft_hop, window=torch.hann_window(self.stft_win).to(input.device), center=False, return_complex=True)
+
+        stft_left = torch.view_as_real(stft_left)
+        stft_right = torch.view_as_real(stft_right)
+        
+        stft_feat = torch.cat([stft_left[:,:,:,0], stft_left[:,:,:,1],
+                               stft_right[:,:,:,0], stft_right[:,:,:,1]], dim=1)
+        
+        # localization on top of tcn features
+        tcn_feature = self.TCN(self.BN(stft_feat))
+        loc_res = self.loc(tcn_feature) # B, num_cls, T
+        loc_res = loc_res.permute(0,2,1) # B, T, num_cls
+                
+        return loc_res
