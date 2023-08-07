@@ -1,0 +1,9 @@
+feature_dim: 64
+hidden_dim: 256
+kernel_size: 3
+num_block: 5
+num_layer: 7
+stft_hop: 32
+stft_win: 512
+num_cls: 181
+
