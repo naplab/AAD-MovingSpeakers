@@ -36,7 +36,7 @@ We train both a separation model and a post-enhancement model, separately.
   ```bash
   python train_enhancement_model.py --training-file-path 'your_path' --validation-file-path 'your_path' --checkpoint-path 'your_path'
 
-## Audotry attention decoding
+## Audotry Attention Decoding (AAD)
 This section contains resources and code for conducting AAD and relevant analyses.
 
 
