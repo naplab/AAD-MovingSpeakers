@@ -23,9 +23,9 @@ This section provides data, code for training separation models, pre-trained mod
 We train both a separation model and a post-enhancement model, separately.
 
 #### Separation Model
-- After downloading the pre-generated raw audio, set up the dataset:
+- After downloading the pre-generated moving speaker audio and noise audio, set up the dataset:
   ```bash
-  python create_datasets.py
+  python create_separation_dataset.py
 - Train the separation model:
   ```bash
   python train_separation_model.py --training-file-path 'your_path' --validation-file-path 'your_path' --checkpoint-path 'your_path'
@@ -35,6 +35,13 @@ We train both a separation model and a post-enhancement model, separately.
 - Kick off the enhancement model training:
   ```bash
   python train_enhancement_model.py --training-file-path 'your_path' --validation-file-path 'your_path' --checkpoint-path 'your_path'
+
+#### Trajectory prediction model
+- The localization model is used to predict the locations (moving trajectory) of the separated speaker.
+- After training the enhancement model, please use it to get enhanced separated speech and create the dataset for training the localization model.
+- Train the localization model training:
+  ```bash
+  python train_localization_model.py --training-file-path 'your_path' --validation-file-path 'your_path' --checkpoint-path 'your_path'
 
 ## Auditory Attention Decoding (AAD)
 This section contains resources and code for conducting AAD and relevant analyses.
