@@ -90,8 +90,6 @@ def train(train_loader, validation_loader, model, optimizer, scheduler, summary_
             
         train_loss /= (batch_idx+1)
         
-        print(epoch, train_loss)
-        
         summary_writer.add_scalar("training/train_loss", train_loss, epoch)
         
         checkpoint_path = "{}/epoch_{:03d}".format(args.checkpoint_path, epoch)
