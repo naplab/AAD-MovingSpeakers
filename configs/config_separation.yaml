@@ -1,0 +1,11 @@
+enc_dim: 96
+enc_stride: 32
+enc_win: 64
+feature_dim: 96
+hidden_dim: 384
+kernel_size: 3
+num_block: 5
+num_layer: 7
+num_spk: 2
+stft_hop: 32
+stft_win: 512
