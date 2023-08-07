@@ -7,7 +7,7 @@ This repository supports our research paper titled "Brain-controlled augmented h
 
 > 🚨 **Notice**: The research paper has not yet been made public. This code is currently intended for paper review purposes only.
 
-## Separating Moving Speakers in a Sound Mixture
+## 1. Separating Moving Speakers in a Sound Mixture
 This section provides data, code for training separation models, pre-trained models, and a demo for inference.
 
 ### Pre-requisites
@@ -15,9 +15,9 @@ This section provides data, code for training separation models, pre-trained mod
 - This codebase is tested on Python version 3.9.16.
 
 ### Datasets
-1. The [Google Resonance Audio software development kit](https://resonance-audio.github.io/resonance-audio/) was employed to spatialize the audio streams of the conversations. For spatializing sounds through HRTFs, adding reverb, and modeling shoebox environments, refer to these [scripts](https://github.com/vishalchoudhari11/GoogleResonanceAudioSpatializer).
-2. Pre-generated moving speaker audio is available. You can download them here.
-3. Download [DEMAND dataset](https://zenodo.org/record/1227121) for acoustic noise in diverse environments.
+- The [Google Resonance Audio software development kit](https://resonance-audio.github.io/resonance-audio/) was employed to spatialize the audio streams of the conversations. For spatializing sounds through HRTFs, adding reverb, and modeling shoebox environments, refer to these [scripts](https://github.com/vishalchoudhari11/GoogleResonanceAudioSpatializer).
+- Pre-generated moving speaker audio is available. You can download them here.
+- Download [DEMAND dataset](https://zenodo.org/record/1227121) for acoustic noise in diverse environments.
 
 ### Training 
 We train both a separation model and a post-enhancement model, separately.
@@ -43,7 +43,7 @@ We train both a separation model and a post-enhancement model, separately.
   ```bash
   python train_localization_model.py --training-file-path 'your_path' --validation-file-path 'your_path' --checkpoint-path 'your_path'
 
-## Auditory Attention Decoding (AAD)
+## 2. Auditory Attention Decoding (AAD)
 This section contains resources and code for conducting AAD and relevant analyses.
 
 
