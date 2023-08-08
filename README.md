@@ -15,12 +15,12 @@ This section provides data, code for training separation models, pre-trained mod
 - This codebase is tested on Python version 3.9.16.
 
 ### Datasets
-- The [Google Resonance Audio software development kit](https://resonance-audio.github.io/resonance-audio/) was employed to spatialize the audio streams of the conversations. For spatializing sounds through HRTFs, adding reverb, and modeling shoebox environments, refer to these [scripts](https://github.com/vishalchoudhari11/GoogleResonanceAudioSpatializer).
-- Pre-generated moving speaker audio is available. You can download them here.
+- The [Google Resonance Audio software development kit](https://resonance-audio.github.io/resonance-audio/) was employed to spatialize the audio. For more details about spatializing sounds through HRTFs, adding reverb, and modeling shoebox environments, please refer to these [scripts](https://github.com/vishalchoudhari11/GoogleResonanceAudioSpatializer).
+- We provide [Pre-generated moving speaker audio](https://drive.google.com/file/d/1XFhzlkn6UKcSMa4JOJXIqj1RkwFpkPre/view?usp=sharing). You can download them without the need to generate them by yourself.
 - Download [DEMAND dataset](https://zenodo.org/record/1227121) for acoustic noise in diverse environments.
 
 ### Training 
-We train both a separation model and a post-enhancement model, separately.
+We train both a separation model, a post-enhancement model, and a localization model separately.
 
 #### Separation Model
 - After downloading the pre-generated moving speaker audio and noise audio, set up the dataset:
