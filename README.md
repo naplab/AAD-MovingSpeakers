@@ -46,6 +46,14 @@ We train both a separation model, a post-enhancement model, and a localization m
 ## 2. Auditory Attention Decoding (AAD)
 This section contains resources and code for conducting AAD and relevant analyses.
 
+### Training CCA models:
+
+The script [Step_15_Spec_SS_g_PCA_CCA_FINAL.m][https://github.com/naplab/AAD-MovingSpeakers/blob/main/AAD/Analysis%20Scripts/Step_15_Spec_SS_g_PCA_CCA_FINAL.m] is used to train CCA models that learn the mapping between the neural responses and the attended stimuli. 
+
+### Evaluating the CCA models:
+
+The script [Step_15_Spec_SS_WinByWin_PCA_CCA_FINAL.m][https://github.com/naplab/AAD-MovingSpeakers/blob/main/AAD/Analysis%20Scripts/Step_15_Spec_SS_WinByWin_PCA_CCA_FINAL.m] is used to evaluate the CCA models for various window sizes on a window-by-window basis and also generate correlations of the brain waves with the attended and unattended stimuli.
+
 
 
 
