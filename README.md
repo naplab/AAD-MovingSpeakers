@@ -2,8 +2,8 @@
 
 ## Overview
 This repository supports our research paper titled "Brain-controlled augmented hearing for spatially moving conversations in noisy environments". The main components of this repository are:
-1. **Binaural speech separation algorithm**: Separates the speech streams of the talkers while preserving their location.
-2. **Auditory attention decoding (AAD)**: Identifies whom the listener wants to listen to by reading brain signals.
+1. **Binaural Speech Separation Algorithm**: Separates the speech streams of the moving talkers while preserving their location.
+2. **Auditory Attention Decoding (AAD)**: Decodes to which talker the listener is attending to by analyzing their brain signals.
 
 > 🚨 **Notice**: The research paper has not yet been made public. This code is currently intended for paper review purposes only.
 
@@ -15,8 +15,8 @@ This section provides data, code for training separation models, pre-trained mod
 - This codebase is tested on Python version 3.9.16.
 
 ### Datasets
-- The [Google Resonance Audio software development kit](https://resonance-audio.github.io/resonance-audio/) was employed to spatialize the audio. For more details about spatializing sounds through HRTFs, adding reverb, and modeling shoebox environments, please refer to these [scripts](https://github.com/vishalchoudhari11/GoogleResonanceAudioSpatializer).
-- We provide [Pre-generated moving speaker audio](https://drive.google.com/file/d/1XFhzlkn6UKcSMa4JOJXIqj1RkwFpkPre/view?usp=sharing). You can download them without the need to generate them by yourself.
+- The [Google Resonance Audio Software Development Kit](https://resonance-audio.github.io/resonance-audio/) was employed to spatialize the audio. For more details about spatializing sounds through HRTFs, adding reverb, and modeling shoebox environments, please refer to these [scripts](https://github.com/vishalchoudhari11/GoogleResonanceAudioSpatializer).
+- We provide [pre-generated moving speaker audio](https://drive.google.com/file/d/1XFhzlkn6UKcSMa4JOJXIqj1RkwFpkPre/view?usp=sharing). You can download them without the need to generate them by yourself.
 - Download [DEMAND dataset](https://zenodo.org/record/1227121) for acoustic noise in diverse environments.
 
 ### Training 
