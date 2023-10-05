@@ -54,7 +54,7 @@ This section contains resources and code for conducting AAD and relevant analyse
 
 - The script [Step_15_Spec_SS_WinByWin_PCA_CCA_FINAL.m](https://github.com/naplab/AAD-MovingSpeakers/blob/main/AAD/Analysis%20Scripts/Step_15_Spec_SS_WinByWin_PCA_CCA_FINAL.m) is used to evaluate the CCA models for various window sizes on a window-by-window basis and also generate correlations of the brain waves with the attended and unattended stimuli.
 
+We use the CCA implementation from the [NoiseTools package](http://audition.ens.fr/adc/NoiseTools/) developed by Dr. Alain de Cheveigné:
 
-
-
+de Cheveigné, A., Wong, DDE., Di Liberto, GM, Hjortkjaer, J., Slaney M., Lalor, E. (2018) Decoding the auditory brain with canonical correlation analysis. NeuroImage 172, 206-216, [https://doi.org/10.1016/j.neuroimage.2018.01.033](https://doi.org/10.1016/j.neuroimage.2018.01.033).
 
