@@ -5,11 +5,15 @@ Picking out a single voice in a noisy crowd is hard for everyone and can be near
 
 This project brings that vision closer to reality by marrying auditory attention decoding (AAD) with spatially aware speech separation. We record invasive EEG (iEEG) from three neurosurgical participants as they follow one of two moving speakers in a noisy environment. A binaural, speaker-independent separation model unmixed the speech mixture while preserving spatial cues and estimating talker trajectories, which in turn support more accurate neural decoding. Together, these components deliver a system that tracks conversations, maintains natural spatial perception, and improves both intelligibility and listening comfort under challenging acoustic conditions—pointing to technology that can support people with hearing difficulties and augment the hearing of those with typical hearing alike.
 
+🏆 This work received **Third Place** at the [2024 International BCI Competition](https://www.bci-award.com/2024).
+
 ## 🔍 Overview
-This repository provides code and resources for the systems evaluated in the project. It contains two main technical components:
+This repository provides code and resources for the system evaluated in the project. It contains two main technical components:
 
 1. **Binaural Speech Separation** 🎯 – separates the speech streams of moving talkers while preserving their spatial locations.
 2. **Auditory Attention Decoding (AAD)** 🧭 – infers which talker a listener attends to based on recorded neural activity.
+
+![System Framework](system_framework.png)
 
 ## 🎙️ Separating Moving Speakers
 This pipeline covers dataset preparation, model training, and inference resources for handling moving-speaker mixtures.
