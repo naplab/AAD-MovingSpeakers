@@ -77,5 +77,8 @@ The CCA implementation builds on the [NoiseTools package](http://audition.ens.fr
 
 > de Cheveigné, A., Wong, DDE., Di Liberto, GM., Hjortkjaer, J., Slaney, M., & Lalor, E. (2018). Decoding the auditory brain with canonical correlation analysis. *NeuroImage, 172*, 206–216. https://doi.org/10.1016/j.neuroimage.2018.01.033
 
+## 🎬 System Demo
+[![System Demo Video](https://img.youtube.com/vi/WkRLxWGs1Lo/0.jpg)](https://www.youtube.com/watch?v=WkRLxWGs1Lo)
+
 ## 📄 Citation
 > Choudhari, V., et al. (2024). Brain-controlled augmented hearing for spatially moving conversations in multi-talker environments. *Advanced Science, 2401379*. https://doi.org/10.1002/advs.202401379
