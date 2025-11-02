@@ -5,8 +5,6 @@ This repository supports our research paper titled "Brain-controlled augmented h
 1. **Binaural Speech Separation Algorithm**: Separates the speech streams of the moving talkers while preserving their location.
 2. **Auditory Attention Decoding (AAD)**: Decodes to which talker the listener is attending to by analyzing their brain signals.
 
-> 🚨 **Notice**: The research paper has not yet been made public. This code is currently intended for paper review purposes only.
-
 ## 1. Separating Moving Speakers in a Sound Mixture
 This section provides data, code for training separation models, pre-trained models, and a demo for inference.
 
