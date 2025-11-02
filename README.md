@@ -1,58 +1,72 @@
 # AAD-MovingSpeakers
 
 ## Overview
-This repository supports our research paper titled "Brain-controlled augmented hearing for spatially moving conversations in noisy environments". The main components of this repository are:
-1. **Binaural Speech Separation Algorithm**: Separates the speech streams of the moving talkers while preserving their location.
-2. **Auditory Attention Decoding (AAD)**: Decodes to which talker the listener is attending to by analyzing their brain signals.
+This repository accompanies the research project *Brain-controlled augmented hearing for spatially moving conversations in noisy environments*. It contains two main technical components:
 
-## 1. Separating Moving Speakers in a Sound Mixture
-This section provides data, code for training separation models, pre-trained models, and a demo for inference.
+1. **Binaural Speech Separation** – separates the speech streams of moving talkers while preserving their spatial locations.
+2. **Auditory Attention Decoding (AAD)** – infers which talker a listener attends to based on recorded neural activity.
 
-### Pre-requisites
-- Ensure you have installed all the dependencies listed in the `requirements.txt` file.
-- This codebase is tested on Python version 3.9.16.
+## Separating Moving Speakers
+This pipeline covers dataset preparation, model training, and inference resources for handling moving-speaker mixtures.
+
+### Prerequisites
+- Python 3.9.16 (tested)
+- Packages listed in `requirements.txt`
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
 
 ### Datasets
-- The [Google Resonance Audio Software Development Kit](https://resonance-audio.github.io/resonance-audio/) was employed to spatialize the audio. For more details about spatializing sounds through HRTFs, adding reverb, and modeling shoebox environments, please refer to these [scripts](https://github.com/vishalchoudhari11/GoogleResonanceAudioSpatializer).
-- We provide [pre-generated moving speaker audio](https://drive.google.com/file/d/1XFhzlkn6UKcSMa4JOJXIqj1RkwFpkPre/view?usp=sharing). You can download them without the need to generate them by yourself.
-- Download [DEMAND dataset](https://zenodo.org/record/1227121) for acoustic noise in diverse environments.
+- [Google Resonance Audio SDK](https://resonance-audio.github.io/resonance-audio/) for spatialization. Supporting scripts are available [here](https://github.com/vishalchoudhari11/GoogleResonanceAudioSpatializer).
+- [Pre-generated moving speaker audio](https://drive.google.com/file/d/1XFhzlkn6UKcSMa4JOJXIqj1RkwFpkPre/view?usp=sharing) to skip offline rendering.
+- [DEMAND dataset](https://zenodo.org/record/1227121) for additive background noise.
 
-### Training 
-We train both a separation model, a post-enhancement model, and a localization model separately.
+### Training Workflow
+Train the separation, enhancement, and localization models sequentially.
 
 #### Separation Model
-- After downloading the pre-generated moving speaker audio and noise audio, set up the dataset:
-  ```bash
-  python create_separation_dataset.py
-- Train the separation model:
-  ```bash
-  python train_separation_model.py --training-file-path 'your_path' --validation-file-path 'your_path' --checkpoint-path 'your_path'
+Prepare training data and fit the separation network:
 
-#### Post-enhancement model
-- After training the separation model, please use it to separate speakers and create the dataset for training the enhancement model.
-- Kick off the enhancement model training:
-  ```bash
-  python train_enhancement_model.py --training-file-path 'your_path' --validation-file-path 'your_path' --checkpoint-path 'your_path'
+```bash
+python create_separation_dataset.py
+python train_separation_model.py \
+  --training-file-path /path/to/train.json \
+  --validation-file-path /path/to/val.json \
+  --checkpoint-path /path/to/checkpoints
+```
 
-#### Trajectory prediction model
-- The localization model is used to predict the locations (moving trajectory) of the separated speaker.
-- After training the enhancement model, please use it to get enhanced separated speech and create the dataset for training the localization model.
-- Train the localization model training:
-  ```bash
-  python train_localization_model.py --training-file-path 'your_path' --validation-file-path 'your_path' --checkpoint-path 'your_path'
+#### Post-enhancement Model
+Generate enhancement training examples with the trained separator, then launch training:
 
-## 2. Auditory Attention Decoding (AAD)
-This section contains resources and code for conducting AAD and relevant analyses.
+```bash
+python train_enhancement_model.py \
+  --training-file-path /path/to/train.json \
+  --validation-file-path /path/to/val.json \
+  --checkpoint-path /path/to/checkpoints
+```
 
-### Training CCA models:
+#### Trajectory Prediction Model
+Use the enhanced outputs to form localization training data, then fit the trajectory predictor:
 
-- The script [Step_15_Spec_SS_g_PCA_CCA_FINAL.m](https://github.com/naplab/AAD-MovingSpeakers/blob/main/AAD/Analysis%20Scripts/Step_15_Spec_SS_g_PCA_CCA_FINAL.m) is used to train CCA models that learn the mapping between the neural responses and the attended stimuli. 
+```bash
+python train_localization_model.py \
+  --training-file-path /path/to/train.json \
+  --validation-file-path /path/to/val.json \
+  --checkpoint-path /path/to/checkpoints
+```
 
-### Evaluating the CCA models:
+## Auditory Attention Decoding
+This section documents scripts for CCA-based AAD analysis.
 
-- The script [Step_15_Spec_SS_WinByWin_PCA_CCA_FINAL.m](https://github.com/naplab/AAD-MovingSpeakers/blob/main/AAD/Analysis%20Scripts/Step_15_Spec_SS_WinByWin_PCA_CCA_FINAL.m) is used to evaluate the CCA models for various window sizes on a window-by-window basis and also generate correlations of the brain waves with the attended and unattended stimuli.
+- `AAD/Analysis Scripts/Step_15_Spec_SS_g_PCA_CCA_FINAL.m`: trains CCA models that link neural signals to the attended stimulus.
+- `AAD/Analysis Scripts/Step_15_Spec_SS_WinByWin_PCA_CCA_FINAL.m`: evaluates CCA performance across window sizes and reports correlations with attended versus unattended stimuli.
 
-We use the CCA implementation from the [NoiseTools package](http://audition.ens.fr/adc/NoiseTools/) developed by Dr. Alain de Cheveigné:
+The CCA implementation builds on the [NoiseTools package](http://audition.ens.fr/adc/NoiseTools/) by de Cheveigné et al.:
 
-de Cheveigné, A., Wong, DDE., Di Liberto, GM, Hjortkjaer, J., Slaney M., Lalor, E. (2018) Decoding the auditory brain with canonical correlation analysis. NeuroImage 172, 206-216, [https://doi.org/10.1016/j.neuroimage.2018.01.033](https://doi.org/10.1016/j.neuroimage.2018.01.033).
+> de Cheveigné, A., Wong, DDE., Di Liberto, GM., Hjortkjaer, J., Slaney, M., & Lalor, E. (2018). Decoding the auditory brain with canonical correlation analysis. *NeuroImage, 172*, 206–216. https://doi.org/10.1016/j.neuroimage.2018.01.033
 
+## Citation
+> Choudhari, V., et al. (2024). Brain-controlled augmented hearing for spatially moving conversations in multi-talker environments. *Advanced Science, 2401379*. https://doi.org/10.1002/advs.202401379
