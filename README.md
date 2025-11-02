@@ -66,8 +66,8 @@ python train_localization_model.py \
 ## 🧠 Auditory Attention Decoding
 This section documents scripts for CCA-based AAD analysis.
 
-- `AAD/Analysis Scripts/Step_15_Spec_SS_g_PCA_CCA_FINAL.m`: trains CCA models that link neural signals to the attended stimulus.
-- `AAD/Analysis Scripts/Step_15_Spec_SS_WinByWin_PCA_CCA_FINAL.m`: evaluates CCA performance across window sizes and reports correlations with attended versus unattended stimuli.
+- `auditory_attention_decoder/analysis_scripts/train_aad_decoder.m`: trains CCA models that link neural signals to the attended stimulus.
+- `auditory_attention_decoder/analysis_scripts/test_aad_decoder.m`: evaluates CCA performance across window sizes and reports correlations with attended versus unattended stimuli.
 
 The CCA implementation builds on the [NoiseTools package](http://audition.ens.fr/adc/NoiseTools/) by de Cheveigné et al.:
 
